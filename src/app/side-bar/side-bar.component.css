@@ -1,0 +1,24 @@
+.mat-nav-list a{
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.mat-nav-list a:hover{
+  color: #fff;
+}
+.horizontal_line{
+  background: rgba(255, 255, 255, 0.3);
+  width: 87%;
+  height: .5px;
+  margin: 0px 0px 0px 15px;
+}
+.nav_header{
+  color: #fff;
+  font-size: 30px;
+  font-weight: bold;
+  letter-spacing: 2.5px;
+  margin-left: 15px;
+}
+.icon_space{
+  margin-left: 15px;
+}

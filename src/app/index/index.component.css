@@ -1,0 +1,24 @@
+mat-card{
+  padding: 0;
+  margin: 50px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+mat-card-title{
+  background-color: rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  padding: 12px;
+  text-align: center;
+  font-size: 25px;
+  color: rgba(0, 0, 0, 0.5);
+  letter-spacing: .5px;
+}
+mat-card-content{
+  padding: 10px 10px 10px 25px;
+}
+.outer_select{
+  background: #17a2b8;
+  width: 60px;
+  height: 45px;
+  color: #fff;
+  border-radius: 3px;
+}
