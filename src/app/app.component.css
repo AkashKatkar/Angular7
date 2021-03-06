@@ -15,3 +15,6 @@ mat-sidenav{
 .fill_remaninig_space{
   flex: 1 auto;
 }
+mat-toolbar{
+  min-width: 550px;
+}

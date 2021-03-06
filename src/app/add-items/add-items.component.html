@@ -1,3 +1,33 @@
-<p>
-  add-items works!
-</p>
+<mat-card class="example-card">
+  <mat-card-title>Add Product</mat-card-title>
+  <mat-card-content>
+    <form class="example-container">
+      <mat-form-field>
+        <input matInput placeholder="Name">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Select Sub-Category</mat-label>
+        <mat-select>
+          <mat-option *ngFor="let product of products" [value]="product.value">
+            {{product.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Price" type="number" class="product_price">
+        <span matPrefix>₹&nbsp;</span>
+        <span matSuffix>.00</span>
+      </mat-form-field>
+
+      <div id="file-upload-wrapper" data-text="Select your file!" (change)="getVal($event)">
+          <input name="img_file" id="product-img" type="file" class="file-upload-field product_picture">
+      </div>
+
+    </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="warn">SUBMIT</button>
+  </mat-card-actions>
+</mat-card>

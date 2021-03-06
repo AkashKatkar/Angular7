@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 export interface PeriodicElement {
   name: string;
@@ -21,19 +21,18 @@ const ELEMENT_DATA: PeriodicElement[] = [
 ];
 
 @Component({
-  selector: 'app-index',
-  templateUrl: './index.component.html',
-  styleUrls: ['./index.component.css']
+  selector: 'app-product',
+  templateUrl: './product.component.html',
+  styleUrls: ['./product.component.css']
 })
-
-export class IndexComponent implements OnInit {
+export class ProductComponent implements OnInit {
   selected = 'showRows5';
   displayedColumns: string[] = ['name', 'weight', 'symbol', 'position'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
   data: PeriodicElement[] = ELEMENT_DATA;
 
   constructor() {
-    $('.category_nav').css('color', '#fff');
+    $('.product_nav').css('color', '#fff');
   }
 
   ngOnInit() {
