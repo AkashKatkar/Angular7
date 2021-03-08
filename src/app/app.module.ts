@@ -10,6 +10,7 @@ import { AddItemsComponent } from './add-items/add-items.component';
 import { SideBarComponent } from './side-bar/side-bar.component';
 import { SubCategoryComponent } from './sub-category/sub-category.component';
 import { ProductComponent } from './product/product.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ProductComponent } from './product/product.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
