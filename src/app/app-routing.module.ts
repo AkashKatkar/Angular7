@@ -1,18 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { IndexComponent } from './index/index.component';
-import { AddItemsComponent } from './add-items/add-items.component';
+import { CategoryComponent } from './category/category.component';
 import { SubCategoryComponent } from './sub-category/sub-category.component';
 import { ProductComponent } from './product/product.component';
+import { AddCategoryComponent } from './add-category/add-category.component';
+import { AddSubCategoryComponent } from './add-sub-category/add-sub-category.component';
+import { AddProductComponent } from './add-product/add-product.component';
 
 const routes: Routes = [
   {
     path: 'index',
-    component: IndexComponent
-  },
-  {
-    path: 'add-items',
-    component: AddItemsComponent
+    component: CategoryComponent
   },
   {
     path: 'sub-category-component',
@@ -21,6 +19,18 @@ const routes: Routes = [
   {
     path: 'product-component',
     component: ProductComponent
+  },
+  {
+    path: 'add-category',
+    component: AddCategoryComponent
+  },
+  {
+    path: 'add-sub-category',
+    component: AddSubCategoryComponent
+  },
+  {
+    path: 'add-product',
+    component: AddProductComponent
   },
   { path: '', redirectTo: '/index', pathMatch: 'full'}
 ];

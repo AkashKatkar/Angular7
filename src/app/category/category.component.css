@@ -77,6 +77,7 @@ select option {
 
 .outer_category_btn{
   flex: 1;
+  outline: none;
 }
 
 /* Search */
@@ -196,3 +197,22 @@ table {
   cursor: auto;
   background-color: #fff;
   border-color: #dee2e6; }
+
+/* Button */
+.btn_{
+  background: rgb(239, 239, 239);
+  border: none;
+  color: black;
+  width: 35px;
+  height: 35px;
+  font-size: 20px;
+  cursor: pointer;
+  outline: none;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.btn_:hover{
+  background: DodgerBlue;
+  color: white;
+}

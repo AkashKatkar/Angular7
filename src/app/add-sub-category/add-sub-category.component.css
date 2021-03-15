@@ -1,0 +1,107 @@
+.example-card {
+  max-width: 400px;
+  display: block;
+  margin: 30px auto auto auto;
+}
+
+mat-card{
+  padding-bottom: 30px;
+  border-radius: 10px;
+}
+
+mat-card-title{
+  text-align: center;
+}
+
+mat-card-actions button{
+  width: 100%;
+  height: 42px;
+}
+
+mat-card-actions {
+  margin: auto;
+}
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.example-container > * {
+  width: 100%;
+}
+
+input.product_price::-webkit-outer-spin-button,
+input.product_price::-webkit-inner-spin-button {
+  display: none;
+}
+
+input.product_price {
+  -moz-appearance: textfield;
+}
+
+/* File */
+#file-upload-wrapper {
+  position: relative;
+  margin-bottom: 34px;
+}
+
+#file-upload-wrapper:after {
+  content: attr(data-text);
+  font-size: 18px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #fff;
+  padding: 10px 15px;
+  display: block;
+  width: calc(100% - 40px);
+  pointer-events: none;
+  z-index: 20;
+  height: 18px;
+  line-height: 20px;
+  color: #999;
+  border-radius: 5px 10px 10px 5px;
+  font-weight: 300;
+  border: 1px solid #54C7C3;
+}
+
+#file-upload-wrapper:before {
+  content: 'Upload';
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: inline-block;
+  height: 40px;
+  background: #54C7C3;
+  color: #fff;
+  font-weight: 700;
+  z-index: 25;
+  font-size: 16px;
+  line-height: 40px;
+  padding: 0 15px;
+  text-transform: uppercase;
+  pointer-events: none;
+  border-radius: 0 5px 5px 0;
+  letter-spacing: 1px;
+}
+
+#file-upload-wrapper:hover:before {
+  background: #55cfca;
+}
+
+#file-upload-wrapper input {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99;
+  height: 40px;
+  margin: 0;
+  padding: 0;
+  display: block;
+  cursor: pointer;
+  width: 100%;
+}

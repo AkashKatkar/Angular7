@@ -1,24 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-];
+import {ProductService} from '../services/product.service';
 
 @Component({
   selector: 'app-product',
@@ -26,39 +7,90 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
-  selected = 'showRows5';
-  displayedColumns: string[] = ['name', 'weight', 'symbol', 'position'];
-  columnsToDisplay: string[] = this.displayedColumns.slice();
-  data: PeriodicElement[] = ELEMENT_DATA;
+  character: string[];
+  selected = '5';
+  displayedColumns: string[] = ['id', 'productName', 'productCategory', 'productPrice', 'productImage', 'action'];
+  selectedRows = 5;
+  searchVal = '';
+  selectedImage: File = File[''];
 
-  constructor() {
+  constructor(private productService: ProductService) {
     $('.product_nav').css('color', '#fff');
   }
 
   ngOnInit() {
+    this.getProduct();
   }
 
-  addColumn() {
-    const randomColumn = Math.floor(Math.random() * this.displayedColumns.length);
-    this.columnsToDisplay.push(this.displayedColumns[randomColumn]);
+  selectRows(event: any) {
+    this.selectedRows = event.target.value;
+    this.getProduct();
   }
 
-  removeColumn() {
-    if (this.columnsToDisplay.length) {
-      this.columnsToDisplay.pop();
+  getProduct() {
+    this.productService.getProduct(this.selectedRows, this.searchVal).subscribe((data: []) => {
+      this.character = data;
+    });
+  }
+
+  deleteProduct(getId: string, position: string): void {
+    if ($('#delete_product' + position).attr('btn') === 'delete') {
+      this.productService.deleteProduct(getId).subscribe(data => {
+        this.character = this.character.filter(u => u !== getId);
+        this.getProduct();
+      });
+    } else {
+      this.getProduct();
     }
   }
 
-  shuffle() {
-    let currentIndex = this.columnsToDisplay.length;
-    while (0 !== currentIndex) {
-      const randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-
-      // Swap
-      const temp = this.columnsToDisplay[currentIndex];
-      this.columnsToDisplay[currentIndex] = this.columnsToDisplay[randomIndex];
-      this.columnsToDisplay[randomIndex] = temp;
+  editProduct(getId: string, categoryName: string, image: string, position: string): void {
+    if ($('#edit_product' + position).attr('btn') === 'edit') {
+      $('#edit_product' + position).attr('btn', 'done');
+      $('#delete_product' + position).attr('btn', 'close');
+      $('#product_name' + position).attr('contenteditable', 'true');
+      $('#product_price' + position).attr('contenteditable', 'true');
+      $('.replaceVal' + position).replaceWith(
+                '<select class="parentSubCategoryName' + position + '" style="border:1px solid rgba(0,0,0,0.5);"></select>');
+      $('#edit_' + position).text('done');
+      $('#delete_' + position).text('close');
+      $('#new_product_image' + position).css('display', 'block');
+      $('#product_image' + position).css('display', 'none');
+      this.getSubCategoryNames(position, categoryName);
+    } else {
+      const formData = new FormData();
+      formData.append('func', 'product');
+      formData.append('prod_name', $('#product_name' + position).text().trim());
+      formData.append('prod_price', $('#product_price' + position).text().trim());
+      formData.append('id', getId);
+      formData.append('prodCategory', $('.parentSubCategoryName' + position).val().toString());
+      formData.append('productImageName', image);
+      formData.append('productImage' + getId, this.selectedImage);
+      this.productService.editProductRecords(formData).subscribe(data => {
+        this.getProduct();
+      });
     }
+  }
+
+  searchProduct(event: any) {
+    this.searchVal = event.target.value;
+    this.getProduct();
+  }
+
+  getSubCategoryNames(position: string, categoryName: string) {
+    this.productService.getSubCategoryNames().subscribe((data: string) => {
+      for (let i = 0; i < (data.length); i++) {
+        if (categoryName === data[i]) {
+          $('<option selected></option>').text(data[i].trim()).attr('value', data[i].trim()).appendTo('.parentSubCategoryName' + position);
+        } else {
+          $('<option></option>').text(data[i].trim()).attr('value', data[i].trim()).appendTo('.parentSubCategoryName' + position);
+        }
+      }
+    });
+  }
+
+  changeImage(event) {
+    $('.file-upload-wrapper').attr('data-text', event.target.value.replace(/.*(\/|\\)/, '').substring(0, 30));
+    this.selectedImage = event.target.files[0];
   }
 }

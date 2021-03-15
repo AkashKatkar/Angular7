@@ -68,17 +68,19 @@ select option {
   background-color: #fff;
   color:black;
 }
-.category_btn{
+.sub_category_btn{
   background-color: #17a2b8;
   color: #fff;
   height: 45px;
   float: right;
 }
 
-.outer_category_btn{
+.outer_sub_category_btn{
   flex: 1;
+  outline: none;
 }
 
+/* Search */
 .search {
   width: 100%;
   margin-bottom: auto;
@@ -164,7 +166,8 @@ table {
   line-height: 1.25;
   color: #007bff;
   background-color: #fff;
-  border: 1px solid #dee2e6; }
+  border: 1px solid #dee2e6;
+  cursor: pointer; }
 
 .page-link:hover {
   z-index: 2;
@@ -194,3 +197,76 @@ table {
   cursor: auto;
   background-color: #fff;
   border-color: #dee2e6; }
+
+  /* Button */
+.btn_{
+  background: rgb(239, 239, 239);
+  border: none;
+  color: black;
+  width: 35px;
+  height: 35px;
+  font-size: 20px;
+  cursor: pointer;
+  outline: none;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.btn_:hover{
+  background: DodgerBlue;
+  color: white;
+}
+
+/* Select Tag */
+.form-control {
+  display: block;
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  -webkit-transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+  -o-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out; }
+  @media (prefers-reduced-motion: reduce) {
+    .form-control {
+      -webkit-transition: none;
+      -o-transition: none;
+      transition: none; } }
+  .form-control::-ms-expand {
+    background-color: transparent;
+    border: 0; }
+  .form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
+  .form-control::-webkit-input-placeholder {
+    color: #6c757d;
+    opacity: 1; }
+  .form-control:-ms-input-placeholder {
+    color: #6c757d;
+    opacity: 1; }
+  .form-control::-ms-input-placeholder {
+    color: #6c757d;
+    opacity: 1; }
+  .form-control::placeholder {
+    color: #6c757d;
+    opacity: 1; }
+  .form-control:disabled, .form-control[readonly] {
+    background-color: #e9ecef;
+    opacity: 1; }
+
+select.form-control:focus::-ms-value {
+  color: #495057;
+  background-color: #fff; }

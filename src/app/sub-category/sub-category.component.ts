@@ -1,24 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-];
+import {ProductService} from '../services/product.service';
 
 @Component({
   selector: 'app-sub-category',
@@ -26,39 +7,76 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./sub-category.component.css']
 })
 export class SubCategoryComponent implements OnInit {
-  selected = 'showRows5';
-  displayedColumns: string[] = ['name', 'weight', 'symbol', 'position'];
-  columnsToDisplay: string[] = this.displayedColumns.slice();
-  data: PeriodicElement[] = ELEMENT_DATA;
+  character: string[];
+  selected = '5';
+  displayedColumns: string[] = ['id', 'subCategoryName', 'code', 'categoryName', 'action'];
+  selectedRows = 5;
+  searchVal = '';
 
-  constructor() {
+  constructor(private productService: ProductService) {
     $('.subcategory_nav').css('color', '#fff');
    }
 
   ngOnInit() {
+    this.getSubCategory();
   }
 
-  addColumn() {
-    const randomColumn = Math.floor(Math.random() * this.displayedColumns.length);
-    this.columnsToDisplay.push(this.displayedColumns[randomColumn]);
+  selectRows(event: any) {
+    this.selectedRows = event.target.value;
+    this.getSubCategory();
   }
 
-  removeColumn() {
-    if (this.columnsToDisplay.length) {
-      this.columnsToDisplay.pop();
+  getSubCategory() {
+    this.productService.getSubCategory(this.selectedRows, this.searchVal).subscribe((data: []) => {
+      this.character = data;
+    });
+  }
+
+  deleteSubCategory(getCode: string, getName: string, getParentName: string, position: string): void {
+    if ($('#delete_sub_category' + position).attr('btn') === 'delete') {
+      this.productService.deleteCategory(getCode).subscribe(data => {
+        this.character = this.character.filter(u => u !== getCode);
+        this.getSubCategory();
+      });
+    } else {
+      this.getSubCategory();
     }
   }
 
-  shuffle() {
-    let currentIndex = this.columnsToDisplay.length;
-    while (0 !== currentIndex) {
-      const randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-
-      // Swap
-      const temp = this.columnsToDisplay[currentIndex];
-      this.columnsToDisplay[currentIndex] = this.columnsToDisplay[randomIndex];
-      this.columnsToDisplay[randomIndex] = temp;
+  editSubCategory(getCode: string, categoryName: string, position: string): void {
+    if ($('#edit_sub_category' + position).attr('btn') === 'edit') {
+      $('#edit_sub_category' + position).attr('btn', 'done');
+      $('#delete_sub_category' + position).attr('btn', 'close');
+      $('#sub_category_name' + position).attr('contenteditable', 'true');
+      $('#sub_category_code' + position).attr('contenteditable', 'true');
+      $('.replaceVal' + position).replaceWith(
+                '<select class="parentCategoryName' + position + '" style="border:1px solid rgba(0,0,0,0.5);"></select>');
+      $('#edit_' + position).text('done');
+      $('#delete_' + position).text('close');
+      this.getCategoryNames(position, categoryName);
+    } else {
+      console.log($('.parentCategoryName' + position).val());
+      this.productService.editSubCategoryRecords($('#sub_category_name' + position).text().trim(),
+        $('#sub_category_code' + position).text().trim(), $('.parentCategoryName' + position).val().toString(), getCode).subscribe(data => {
+        this.getSubCategory();
+      });
     }
+  }
+
+  searchSubCategory(event: any) {
+    this.searchVal = event.target.value;
+    this.getSubCategory();
+  }
+
+  getCategoryNames(position: string, categoryName: string) {
+    this.productService.getCategoryNames().subscribe((data: string) => {
+      for (let i = 0; i < (data.length); i++) {
+        if (categoryName === data[i]) {
+          $('<option selected></option>').text(data[i].trim()).attr('value', data[i].trim()).appendTo('.parentCategoryName' + position);
+        } else {
+            $('<option></option>').text(data[i].trim()).attr('value', data[i].trim()).appendTo('.parentCategoryName' + position);
+        }
+      }
+    });
   }
 }

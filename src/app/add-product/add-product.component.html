@@ -9,8 +9,8 @@
       <mat-form-field>
         <mat-label>Select Sub-Category</mat-label>
         <mat-select>
-          <mat-option *ngFor="let product of products" [value]="product.value">
-            {{product.viewValue}}
+          <mat-option *ngFor="let subCateg of subCategory" [value]="subCateg">
+            {{subCateg}}
           </mat-option>
         </mat-select>
       </mat-form-field>

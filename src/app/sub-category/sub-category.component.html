@@ -4,49 +4,66 @@
     <div style="display: flex;">
       <div style="flex: 1;">
         <div class="selectdiv">
-          <select id="outer_showRows">
-            <option value="showRows5">5</option>
-            <option value="showRows10">10</option>
-            <option value="showRows15">15</option>
-            <option value="showRows20">20</option>
+          <select id="outer_showRows" (change)="selectRows($event)">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
           </select>
         </div>
       </div>
 
       <div class="search">
-        <input type="text" class="search-input" placeholder="Search...">
+        <input type="text" class="search-input" placeholder="Search..." (input)="searchSubCategory($event)">
         <a class="search-icon">
           <i class="material-icons" style="font-size: 17px;">search</i>
         </a>
       </div>
 
-      <div class="outer_category_btn" [routerLink]="['/addItems']" routerLinkActive="active">
-        <button mat-raised-button class="category_btn">Add Sub-Category</button>
+      <div class="outer_sub_category_btn" [routerLink]="['/add-sub-category']" routerLinkActive="active">
+        <button mat-raised-button class="sub_category_btn">Add Sub-Category</button>
       </div>
 
     </div>
 
-    <div class="outer_table">
-      <button mat-raised-button (click)="addColumn()"> Add column </button>
-      <button mat-raised-button (click)="removeColumn()"> Remove column </button>
-      <button mat-raised-button (click)="shuffle()"> Shuffle </button>
+    <table mat-table [dataSource]="character" class="mat-elevation-z8">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> # </th>
+        <td mat-cell *matCellDef="let element; let i = index;"> {{ i+1 }} </td>
+      </ng-container>
 
-      <table mat-table [dataSource]="data" class="mat-elevation-z8">
-        <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
-          <th mat-header-cell *matHeaderCellDef> {{column}} </th>
-          <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
-        </ng-container>
+      <ng-container matColumnDef="subCategoryName">
+        <th mat-header-cell *matHeaderCellDef>Sub-Categroy Name </th>
+        <td mat-cell *matCellDef="let element; let i = index;" id='sub_category_name{{i+1}}'> {{element.category_name}} </td>
+      </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-        <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
-      </table>
-    </div>
+      <ng-container matColumnDef="code">
+        <th mat-header-cell *matHeaderCellDef> Code </th>
+        <td mat-cell *matCellDef="let element; let i = index;" id='sub_category_code{{i+1}}'> {{element.code}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="categoryName">
+        <th mat-header-cell *matHeaderCellDef> Categroy Name </th>
+        <td mat-cell *matCellDef="let element; let i = index;" id='category_name{{i+1}}'> <nav class='replaceVal{{i+1}}'>{{element.parent_category}}</nav> </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let element; let i = index;" style='min-width: 104px;'>
+          <button type='button' class='btn_' btn = 'edit' style='margin-right:5px' id='edit_sub_category{{i+1}}' (click)="editSubCategory(element.code, element.parent_category, i+1)"><mat-icon mat-list-icon id='edit_{{i+1}}'>edit</mat-icon></button>
+          <button type='button' class='btn_' btn = 'delete' id='delete_sub_category{{i+1}}' (click)="deleteSubCategory(element.code, element.category_name, element.parent_category, i+1)"><mat-icon mat-list-icon id='delete_{{i+1}}'>delete</mat-icon></button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
 
     <nav class="outer_pagination">
       <ul class="pagination">
-        <li class="page-item"><a class="page-link">First</a></li>
-        <li class="page-item"><a class="page-link">Previous</a></li>
-        <li class="page-item"><a class="page-link">1</a></li>
+        <li class="page-item disabled"><a class="page-link">First</a></li>
+        <li class="page-item disabled"><a class="page-link">Previous</a></li>
+        <li class="page-item"><a class="page-link" style="background-color: #536bf6;color: #fff;">1</a></li>
         <li class="page-item"><a class="page-link">2</a></li>
         <li class="page-item"><a class="page-link">3</a></li>
         <li class="page-item"><a class="page-link">Next</a></li>
