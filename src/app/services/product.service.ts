@@ -1,5 +1,5 @@
 import { environment } from '../../environments/environment';
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -7,51 +7,27 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ProductService {
 
-  public url = environment.web_api_url_base;
   constructor(private http: HttpClient) { }
+  idCode: string;
+  recordTo: string;
+  redirectValue: string;
+  public url = environment.web_api_url_base;
 
-  getCategory(selectedRows: number, searchVal: string) {
-    return this.http.get(
-      this.url + 'getRecords.php?func=category&selectedRows=' + selectedRows + '&searchVal=' + searchVal);
+  invokeAddRecordsFunction = new EventEmitter();
+
+  onAddRecordsButtonClick() {
+    this.invokeAddRecordsFunction.emit();
   }
 
-  deleteCategory(code: string) {
-    return this.http.delete(
-      this.url + 'deleteRecords.php?func=category&operation=delete_record&code=' + code);
+  getRecords(formData: FormData) {
+    return this.http.post(this.url + 'getRecords.php', formData);
   }
 
-  editCategoryRecords(name: string, code: string, oldCode: string) {
-    return this.http.get(
-      this.url + 'editRecords.php?func=category&categ_name=' + name + '&categ_code=' + code + '&oldCode=' + oldCode);
+  deleteRecords(formData: FormData) {
+    return this.http.post(this.url + 'deleteRecords.php', formData);
   }
 
-  getSubCategory(selectedRows: number, searchVal: string) {
-    return this.http.get(
-      this.url + 'getRecords.php?func=sub_category&selectedRows=' + selectedRows + '&searchVal=' + searchVal);
-  }
-
-  deleteSubCategory(code: string) {
-    return this.http.delete(
-      this.url + 'deleteRecords.php?func=sub_category&code=' + code);
-  }
-
-  editSubCategoryRecords(name: string, code: string, parentName: string, oldCode: string) {
-    return this.http.get(
-      this.url + 'editRecords.php?func=sub_category&categ_name=' + name +
-      '&categ_code=' + code + '&oldCode=' + oldCode + '&parentName=' + parentName);
-  }
-
-  getProduct(selectedRows: number, searchVal: string) {
-    return this.http.get(
-      this.url + 'getRecords.php?func=product&selectedRows=' + selectedRows + '&searchVal=' + searchVal);
-  }
-
-  deleteProduct(id: string) {
-    return this.http.delete(
-      this.url + 'deleteRecords.php?func=product&id=' + id);
-  }
-
-  editProductRecords(formData: FormData) {
+  editRecords(formData: FormData) {
     return this.http.post(this.url + 'editRecords.php', formData);
   }
 
@@ -61,5 +37,33 @@ export class ProductService {
 
   getSubCategoryNames() {
     return this.http.get(this.url + 'getSubCategoryNames.php');
+  }
+
+  addRecords(formData: FormData) {
+    return this.http.post(this.url + 'addRecords.php', formData);
+  }
+
+  getRestoreRecords(func: string) {
+    return this.http.get(this.url + 'getRestoreRecords.php?func=' + func);
+  }
+
+  setRestoreRecords(formData: FormData) {
+    return this.http.post(this.url + 'setRestoreRecords.php', formData);
+  }
+
+  permanentDeleteRecords(formData: FormData) {
+    return this.http.post(this.url + 'permanentDeleteRecords.php', formData);
+  }
+
+  login(formData: FormData) {
+    return this.http.post(this.url + 'login.php', formData);
+  }
+
+  loginAuth(formData: FormData) {
+    return this.http.post(this.url + 'getLoginToken.php', formData);
+  }
+
+  logout(formData: FormData) {
+    return this.http.post(this.url + 'logout.php', formData);
   }
 }

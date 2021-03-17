@@ -6,7 +6,7 @@
     <mat-toolbar>
       <button (click)='sidenav1.toggle()' mat-icon-button><i class="material-icons">menu</i></button>
       <span class="fill_remaninig_space"></span>
-      <button mat-button>Log Out</button>
+      <button mat-button (click)="logout()">Log Out</button>
     </mat-toolbar>
     <router-outlet></router-outlet>
   </mat-sidenav-content>

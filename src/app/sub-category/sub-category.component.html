@@ -52,6 +52,7 @@
         <td mat-cell *matCellDef="let element; let i = index;" style='min-width: 104px;'>
           <button type='button' class='btn_' btn = 'edit' style='margin-right:5px' id='edit_sub_category{{i+1}}' (click)="editSubCategory(element.code, element.parent_category, i+1)"><mat-icon mat-list-icon id='edit_{{i+1}}'>edit</mat-icon></button>
           <button type='button' class='btn_' btn = 'delete' id='delete_sub_category{{i+1}}' (click)="deleteSubCategory(element.code, element.category_name, element.parent_category, i+1)"><mat-icon mat-list-icon id='delete_{{i+1}}'>delete</mat-icon></button>
+          <a mat-stroked-button color="primary" [routerLink]="['/add-product']" (click)="redirectAddProduct(element.category_name)" style="margin-left: 5px;top: -6.5px;">Add Product</a>
         </td>
       </ng-container>
 

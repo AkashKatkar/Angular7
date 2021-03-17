@@ -1,6 +1,6 @@
 <?php
   include_once("database.php");
-  switch($_GET["func"]){
+  switch($_POST["func"]){
     case "category":
       category();
       break;
@@ -16,9 +16,9 @@
 
   function category() {
     global $mysqli;
-    $search = $_GET['searchVal'];
+    $search = $_POST['searchVal'];
     $page = 1;
-    $showRows = $_GET['selectedRows'];
+    $showRows = $_POST['selectedRows'];
     $start = $showRows*($page-1);
     if($search!=''){
       $stmt = $mysqli->prepare("SELECT * FROM category WHERE parent_id IS NULL
@@ -39,9 +39,9 @@
   function sub_category() {
     global $mysqli;
     $page = 1;
-    $showRows = $_GET['selectedRows'];
+    $showRows = $_POST['selectedRows'];
     $start = $showRows*($page-1);
-    $search = $_GET['searchVal'];
+    $search = $_POST['searchVal'];
     if($search!=''){
       $stmt = $mysqli->prepare("SELECT A.category_name, A.code, B.category_name AS parent_category
       FROM category A, category B
@@ -71,9 +71,9 @@
   function product() {
     global $mysqli;
     $page = 1;
-    $showRows = $_GET['selectedRows'];
+    $showRows = $_POST['selectedRows'];
     $start = $showRows*($page-1);
-    $search = $_GET['searchVal'];
+    $search = $_POST['searchVal'];
     if($search!=''){
       $stmt = $mysqli->prepare("SELECT product.id, product.prod_name, category.category_name, product.price, product.product_image
       FROM product

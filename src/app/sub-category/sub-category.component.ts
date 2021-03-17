@@ -10,11 +10,13 @@ export class SubCategoryComponent implements OnInit {
   character: string[];
   selected = '5';
   displayedColumns: string[] = ['id', 'subCategoryName', 'code', 'categoryName', 'action'];
-  selectedRows = 5;
+  selectedRows = '5';
   searchVal = '';
 
   constructor(private productService: ProductService) {
+    $('.category_nav').css('color', '');
     $('.subcategory_nav').css('color', '#fff');
+    $('.product_nav').css('color', '');
    }
 
   ngOnInit() {
@@ -27,16 +29,24 @@ export class SubCategoryComponent implements OnInit {
   }
 
   getSubCategory() {
-    this.productService.getSubCategory(this.selectedRows, this.searchVal).subscribe((data: []) => {
+    const formData = new FormData();
+    formData.append('func', 'sub_category');
+    formData.append('selectedRows', this.selectedRows);
+    formData.append('searchVal', this.searchVal);
+    this.productService.getRecords(formData).subscribe((data: []) => {
       this.character = data;
     });
   }
 
   deleteSubCategory(getCode: string, getName: string, getParentName: string, position: string): void {
     if ($('#delete_sub_category' + position).attr('btn') === 'delete') {
-      this.productService.deleteCategory(getCode).subscribe(data => {
+      const formData = new FormData();
+      formData.append('func', 'sub_category');
+      formData.append('code', getCode);
+      this.productService.deleteRecords(formData).subscribe(data => {
         this.character = this.character.filter(u => u !== getCode);
         this.getSubCategory();
+        alert(data);
       });
     } else {
       this.getSubCategory();
@@ -55,10 +65,15 @@ export class SubCategoryComponent implements OnInit {
       $('#delete_' + position).text('close');
       this.getCategoryNames(position, categoryName);
     } else {
-      console.log($('.parentCategoryName' + position).val());
-      this.productService.editSubCategoryRecords($('#sub_category_name' + position).text().trim(),
-        $('#sub_category_code' + position).text().trim(), $('.parentCategoryName' + position).val().toString(), getCode).subscribe(data => {
+      const formData = new FormData();
+      formData.append('func', 'sub_category');
+      formData.append('categ_name', $('#sub_category_name' + position).text().trim());
+      formData.append('categ_code', $('#sub_category_code' + position).text().trim());
+      formData.append('parentName', $('.parentCategoryName' + position).val().toString());
+      formData.append('oldCode', getCode);
+      this.productService.editRecords(formData).subscribe(data => {
         this.getSubCategory();
+        alert(data);
       });
     }
   }
@@ -78,5 +93,9 @@ export class SubCategoryComponent implements OnInit {
         }
       }
     });
+  }
+
+  redirectAddProduct(value: string) {
+    this.productService.redirectValue = value;
   }
 }

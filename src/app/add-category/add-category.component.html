@@ -3,15 +3,30 @@
   <mat-card-content>
     <form class="example-container">
       <mat-form-field>
-        <input matInput placeholder="Name">
+        <input matInput placeholder="Name" #categ_name>
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="Code">
+        <input matInput placeholder="Code" #categ_code>
       </mat-form-field>
     </form>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button color="warn">SUBMIT</button>
+    <button mat-raised-button color="warn" (click)="addCategory(categ_name.value, categ_code.value)">SUBMIT</button>
   </mat-card-actions>
+
+  <div id='toggleTag'>
+    <mat-card-actions style="width: 50%;margin-bottom: -15px;">
+      <button mat-raised-button style="background:#007bff;color: #fff;" (click)="restoreCategoryBtn()">RESTORE CATEGORY</button>
+    </mat-card-actions>
+
+    <mat-form-field style='display: none;margin-bottom: -15px;width: 100%;'>
+      <mat-label>Select Restore Category</mat-label>
+      <mat-select (selectionChange)="restoreConformationBox($event)">
+        <mat-option *ngFor="let restoreCateg of restoreData" [value]="restoreCateg.code">
+          {{restoreCateg.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 </mat-card>

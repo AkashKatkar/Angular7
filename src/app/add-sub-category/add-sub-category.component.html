@@ -3,16 +3,16 @@
   <mat-card-content>
     <form class="example-container">
       <mat-form-field>
-        <input matInput placeholder="Name">
+        <input matInput placeholder="Name" #sub_categ_name>
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="Code">
+        <input matInput placeholder="Code" #sub_categ_code>
       </mat-form-field>
 
       <mat-form-field>
-        <mat-label>Select Sub-Category</mat-label>
-        <mat-select>
+        <mat-label>Select Category</mat-label>
+        <mat-select #select_categ [(value)]="selectedOption">
           <mat-option *ngFor="let categ of category" [value]="categ">
             {{categ}}
           </mat-option>
@@ -22,6 +22,21 @@
     </form>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button color="warn">SUBMIT</button>
+    <button mat-raised-button color="warn" (click)="addSubCategory(sub_categ_name.value, sub_categ_code.value, select_categ.value)">SUBMIT</button>
   </mat-card-actions>
+
+  <div id='toggleTag'>
+    <mat-card-actions style="width: 50%;margin-bottom: -15px;">
+      <button mat-raised-button style="background:#007bff;color: #fff;" (click)="restoreSubCategoryBtn()">RESTORE SUB-CATEGORY</button>
+    </mat-card-actions>
+
+    <mat-form-field style='display: none;margin-bottom: -15px;width: 100%;'>
+      <mat-label>Select Restore Sub-Category</mat-label>
+      <mat-select (selectionChange)="restoreConformationBox($event)">
+        <mat-option *ngFor="let restoreSubCateg of restoreData" [value]="restoreSubCateg.code">
+          {{restoreSubCateg.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 </mat-card>

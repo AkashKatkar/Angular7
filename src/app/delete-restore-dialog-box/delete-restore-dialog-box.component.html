@@ -1,0 +1,14 @@
+<h1 mat-dialog-title class="title">
+  <label style="flex: 1;">Restore or Delete Data</label>
+  <button mat-dialog-close="true" class="close_btn"><mat-icon mat-list-icon class="close_icon">close</mat-icon></button>
+</h1>
+<div class="horizontal_line"></div>
+<div mat-dialog-content>
+  <p class="content">Press <b>RESTORE</b> Button If Retrieve Your Data. You Cannot Retrieve Any of Those Data& Informations After Press <b>PERMANENT DELETE</b> Button.</p>
+</div>
+<div class="horizontal_line" style="margin-top: 0px;"></div>
+<div mat-dialog-actions style="display:flex;">
+  <label style="flex:1;"></label>
+  <button mat-raised-button color="warn" style="flex:1.5;" (click)="permanentDeleteRecords()">PERMANENT DELETE</button>
+  <button mat-raised-button class="restore_btn" style="flex:1;" (click)="restoreRecords()">RESTORE</button>
+</div>

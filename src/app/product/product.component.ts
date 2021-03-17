@@ -10,11 +10,13 @@ export class ProductComponent implements OnInit {
   character: string[];
   selected = '5';
   displayedColumns: string[] = ['id', 'productName', 'productCategory', 'productPrice', 'productImage', 'action'];
-  selectedRows = 5;
+  selectedRows = '5';
   searchVal = '';
   selectedImage: File = File[''];
 
   constructor(private productService: ProductService) {
+    $('.category_nav').css('color', '');
+    $('.subcategory_nav').css('color', '');
     $('.product_nav').css('color', '#fff');
   }
 
@@ -28,16 +30,24 @@ export class ProductComponent implements OnInit {
   }
 
   getProduct() {
-    this.productService.getProduct(this.selectedRows, this.searchVal).subscribe((data: []) => {
+    const formData = new FormData();
+    formData.append('func', 'product');
+    formData.append('selectedRows', this.selectedRows);
+    formData.append('searchVal', this.searchVal);
+    this.productService.getRecords(formData).subscribe((data: []) => {
       this.character = data;
     });
   }
 
   deleteProduct(getId: string, position: string): void {
     if ($('#delete_product' + position).attr('btn') === 'delete') {
-      this.productService.deleteProduct(getId).subscribe(data => {
+      const formData = new FormData();
+      formData.append('func', 'product');
+      formData.append('id', getId);
+      this.productService.deleteRecords(formData).subscribe(data => {
         this.character = this.character.filter(u => u !== getId);
         this.getProduct();
+        alert(data);
       });
     } else {
       this.getProduct();
@@ -66,8 +76,9 @@ export class ProductComponent implements OnInit {
       formData.append('prodCategory', $('.parentSubCategoryName' + position).val().toString());
       formData.append('productImageName', image);
       formData.append('productImage' + getId, this.selectedImage);
-      this.productService.editProductRecords(formData).subscribe(data => {
+      this.productService.editRecords(formData).subscribe(data => {
         this.getProduct();
+        alert(data);
       });
     }
   }

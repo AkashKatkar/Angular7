@@ -3,12 +3,12 @@
   <mat-card-content>
     <form class="example-container">
       <mat-form-field>
-        <input matInput placeholder="Name">
+        <input matInput placeholder="Name" #prod_name>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>Select Sub-Category</mat-label>
-        <mat-select>
+        <mat-select #select_sub_category [(value)]="selectedOption">
           <mat-option *ngFor="let subCateg of subCategory" [value]="subCateg">
             {{subCateg}}
           </mat-option>
@@ -16,7 +16,7 @@
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="Price" type="number" class="product_price">
+        <input matInput placeholder="Price" type="number" class="product_price" #prod_price>
         <span matPrefix>₹&nbsp;</span>
         <span matSuffix>.00</span>
       </mat-form-field>
@@ -24,10 +24,24 @@
       <div id="file-upload-wrapper" data-text="Select your file!" (change)="getVal($event)">
           <input name="img_file" id="product-img" type="file" class="file-upload-field product_picture">
       </div>
-
     </form>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button color="warn">SUBMIT</button>
+    <button mat-raised-button color="warn" (click)="addProduct(prod_name.value, select_sub_category.value, prod_price.value)">SUBMIT</button>
   </mat-card-actions>
+
+  <div id='toggleTag'>
+    <mat-card-actions style="width: 50%;margin-bottom: -15px;">
+      <button mat-raised-button style="background:#007bff;color: #fff;" (click)="restoreProductBtn()">RESTORE PRODUCT</button>
+    </mat-card-actions>
+
+    <mat-form-field style='display: none;margin-bottom: -15px;width: 100%;'>
+      <mat-label>Select Restore Product</mat-label>
+      <mat-select (selectionChange)="restoreConformationBox($event)">
+        <mat-option *ngFor="let restoreProd of restoreData" [value]="restoreProd.id">
+          {{restoreProd.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 </mat-card>

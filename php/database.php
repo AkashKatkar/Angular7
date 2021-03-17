@@ -5,8 +5,5 @@
   header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
   header("Content-Type: application/json; charset=UTF-8");
 
-  $mysqli = new mysqli('localhost', 'root', '', 'ecommerce_website_angular7');
-  if ($mysqli->connect_error) {
-    die('Error : ('. $mysqli->connect_errno .') '. $mysqli->connect_error);
-  }
+  $mysqli = new mysqli('localhost', 'root', '', 'ecommercewebsite_angular7');
 ?>

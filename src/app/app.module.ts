@@ -13,6 +13,9 @@ import { ProductComponent } from './product/product.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AddSubCategoryComponent } from './add-sub-category/add-sub-category.component';
 import { AddProductComponent } from './add-product/add-product.component';
+import { DeleteRestoreDialogBoxComponent } from './delete-restore-dialog-box/delete-restore-dialog-box.component';
+import { AuthGuard } from './guard/auth.guard';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,12 @@ import { AddProductComponent } from './add-product/add-product.component';
     SubCategoryComponent,
     ProductComponent,
     AddSubCategoryComponent,
-    AddProductComponent
+    AddProductComponent,
+    DeleteRestoreDialogBoxComponent,
+    LoginComponent
+  ],
+  entryComponents: [
+    DeleteRestoreDialogBoxComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +40,7 @@ import { AddProductComponent } from './add-product/add-product.component';
     MaterialModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [ AuthGuard ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
