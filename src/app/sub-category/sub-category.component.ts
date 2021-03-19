@@ -6,9 +6,12 @@ import {ProductService} from '../services/product.service';
   templateUrl: './sub-category.component.html',
   styleUrls: ['./sub-category.component.css']
 })
+
 export class SubCategoryComponent implements OnInit {
+  p = 1;
+  itemsPerPage = 5;
+  searchFilter: string;
   character: string[];
-  selected = '5';
   displayedColumns: string[] = ['id', 'subCategoryName', 'code', 'categoryName', 'action'];
   selectedRows = '5';
   searchVal = '';
@@ -25,13 +28,13 @@ export class SubCategoryComponent implements OnInit {
 
   selectRows(event: any) {
     this.selectedRows = event.target.value;
+    this.itemsPerPage = event.target.value;
     this.getSubCategory();
   }
 
   getSubCategory() {
     const formData = new FormData();
     formData.append('func', 'sub_category');
-    formData.append('selectedRows', this.selectedRows);
     formData.append('searchVal', this.searchVal);
     this.productService.getRecords(formData).subscribe((data: []) => {
       this.character = data;
@@ -76,11 +79,6 @@ export class SubCategoryComponent implements OnInit {
         alert(data);
       });
     }
-  }
-
-  searchSubCategory(event: any) {
-    this.searchVal = event.target.value;
-    this.getSubCategory();
   }
 
   getCategoryNames(position: string, categoryName: string) {

@@ -16,6 +16,8 @@ import { AddProductComponent } from './add-product/add-product.component';
 import { DeleteRestoreDialogBoxComponent } from './delete-restore-dialog-box/delete-restore-dialog-box.component';
 import { AuthGuard } from './guard/auth.guard';
 import { LoginComponent } from './login/login.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { LoginComponent } from './login/login.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxPaginationModule,
+    Ng2SearchPipeModule
   ],
   providers: [ AuthGuard ],
   bootstrap: [AppComponent]

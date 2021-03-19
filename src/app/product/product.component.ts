@@ -6,9 +6,12 @@ import {ProductService} from '../services/product.service';
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css']
 })
+
 export class ProductComponent implements OnInit {
+  p = 1;
+  itemsPerPage = 5;
+  searchFilter: string;
   character: string[];
-  selected = '5';
   displayedColumns: string[] = ['id', 'productName', 'productCategory', 'productPrice', 'productImage', 'action'];
   selectedRows = '5';
   searchVal = '';
@@ -26,13 +29,13 @@ export class ProductComponent implements OnInit {
 
   selectRows(event: any) {
     this.selectedRows = event.target.value;
+    this.itemsPerPage = event.target.value;
     this.getProduct();
   }
 
   getProduct() {
     const formData = new FormData();
     formData.append('func', 'product');
-    formData.append('selectedRows', this.selectedRows);
     formData.append('searchVal', this.searchVal);
     this.productService.getRecords(formData).subscribe((data: []) => {
       this.character = data;
@@ -81,11 +84,6 @@ export class ProductComponent implements OnInit {
         alert(data);
       });
     }
-  }
-
-  searchProduct(event: any) {
-    this.searchVal = event.target.value;
-    this.getProduct();
   }
 
   getSubCategoryNames(position: string, categoryName: string) {

@@ -14,7 +14,7 @@
       </div>
 
       <div class="search">
-        <input type="text" class="search-input" placeholder="Search..." (input)="searchSubCategory($event)">
+        <input type="text" class="search-input" placeholder="Search..." [(ngModel)]="searchFilter">
         <a class="search-icon">
           <i class="material-icons" style="font-size: 17px;">search</i>
         </a>
@@ -26,10 +26,10 @@
 
     </div>
 
-    <table mat-table [dataSource]="character" class="mat-elevation-z8">
+    <table mat-table [dataSource]="character | filter: searchFilter | paginate: { itemsPerPage: itemsPerPage , currentPage: p }" class="mat-elevation-z8">
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef> # </th>
-        <td mat-cell *matCellDef="let element; let i = index;"> {{ i+1 }} </td>
+        <td mat-cell *matCellDef="let element; let i = index;"> {{ (itemsPerPage*(p-1)+1)+i }} </td>
       </ng-container>
 
       <ng-container matColumnDef="subCategoryName">
@@ -60,16 +60,8 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
-    <nav class="outer_pagination">
-      <ul class="pagination">
-        <li class="page-item disabled"><a class="page-link">First</a></li>
-        <li class="page-item disabled"><a class="page-link">Previous</a></li>
-        <li class="page-item"><a class="page-link" style="background-color: #536bf6;color: #fff;">1</a></li>
-        <li class="page-item"><a class="page-link">2</a></li>
-        <li class="page-item"><a class="page-link">3</a></li>
-        <li class="page-item"><a class="page-link">Next</a></li>
-        <li class="page-item"><a class="page-link">Last</a></li>
-      </ul>
-    </nav>
+    <div style="text-align: center;align-items: center;margin-top: 35px;">
+      <pagination-controls (pageChange)="getSubCategory(p = $event)"></pagination-controls>
+    </div>
   </mat-card-content>
 </mat-card>

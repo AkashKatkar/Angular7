@@ -8,11 +8,12 @@ import {ProductService} from '../services/product.service';
 })
 
 export class CategoryComponent implements OnInit {
+  p = 1;
+  itemsPerPage = 5;
   character: string[];
-  selected = '5';
   displayedColumns: string[] = ['id', 'categoryName', 'code', 'action'];
   selectedRows = '5';
-  searchVal = '';
+  searchFilter: string;
 
   constructor(private productService: ProductService) {
     $('.category_nav').css('color', '#fff');
@@ -26,14 +27,13 @@ export class CategoryComponent implements OnInit {
 
   selectRows(event: any) {
     this.selectedRows = event.target.value;
+    this.itemsPerPage = event.target.value;
     this.getCategory();
   }
 
   getCategory() {
     const formData = new FormData();
     formData.append('func', 'category');
-    formData.append('selectedRows', this.selectedRows);
-    formData.append('searchVal', this.searchVal);
     this.productService.getRecords(formData).subscribe((data: []) => {
       this.character = data;
     });
@@ -79,11 +79,6 @@ export class CategoryComponent implements OnInit {
         alert(data);
       });
     }
-  }
-
-  searchCategory(event: any) {
-    this.searchVal = event.target.value;
-    this.getCategory();
   }
 
   redirectAddSubCategory(value: string) {
